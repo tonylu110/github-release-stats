@@ -1,5 +1,41 @@
 var apiRoot = "https://api.github.com/";
 
+function updateUIText() {
+    document.title = i18n.t('title');
+    document.getElementById('page-title').textContent = i18n.t('title');
+    document.getElementById('page-description').content = i18n.t('description');
+    document.getElementById('page-keywords').content = i18n.t('keywords');
+    document.getElementById('navbar-title').textContent = i18n.t('title');
+    document.getElementById('lang-display').textContent = i18n.t('language');
+    document.getElementById('view-github').textContent = i18n.t('viewOnGithub');
+    document.getElementById('enter-details').textContent = i18n.t('enterProjectDetails');
+    document.getElementById('get-stats-button').textContent = i18n.t('getStats');
+    document.getElementById('desc-text').textContent = i18n.t('statsDescription');
+    document.getElementById('get-prev-results-button').textContent = i18n.t('newer');
+    document.getElementById('get-next-results-button').textContent = i18n.t('older');
+    document.getElementById('per-page-label').textContent = i18n.t('perPage');
+    
+    document.getElementById('username').placeholder = i18n.t('githubUsername');
+    document.getElementById('repository').placeholder = i18n.t('repositoryName');
+    
+    var titleDesc = document.getElementById('title-description');
+    if (titleDesc) {
+        titleDesc.textContent = i18n.t('titleDescription');
+    }
+}
+
+function changeLang(lang) {
+    i18n.setLang(lang);
+    updateUIText();
+    var username = getQueryVariable("username");
+    var repository = getQueryVariable("repository");
+    if(username != "" && repository != "") {
+        var page = getQueryVariable("page") || 1;
+        var perPage = getQueryVariable("per_page") || 5;
+        getStats(page, perPage);
+    }
+}
+
 // Return a HTTP query variable
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
@@ -67,17 +103,17 @@ function showStats(data) {
 
     if(data.status == 404) {
         err = true;
-        errMessage = "The project does not exist!";
+        errMessage = i18n.t('projectNotExist');
     }
 
     if(data.status == 403) {
         err = true;
-        errMessage = "You've exceeded GitHub's rate limiting.<br />Please try again in about an hour.";
+        errMessage = i18n.t('rateLimitExceeded');
     }
 
     if(data.length == 0) {
         err = true;
-        errMessage = getQueryVariable("page") > 1 ? "No more releases" : "There are no releases for this project";
+        errMessage = getQueryVariable("page") > 1 ? i18n.t('noMoreReleases') : i18n.t('noReleases');
     }
 
     var html = "";
@@ -101,10 +137,10 @@ function showStats(data) {
             var publishDate = item.published_at.split("T")[0];
 
             if(isPreRelease) {
-                releaseBadge = "&nbsp;&nbsp;<span class='badge'>Pre-release</span>";
+                releaseBadge = "&nbsp;&nbsp;<span class='badge'>" + i18n.t('preRelease') + "</span>";
                 releaseClassNames += " pre-release";
             } else if(isLatestRelease) {
-                releaseBadge = "&nbsp;&nbsp;<span class='badge'>Latest release</span>";
+                releaseBadge = "&nbsp;&nbsp;<span class='badge'>" + i18n.t('latestRelease') + "</span>";
                 releaseClassNames += " latest-release";
                 isLatestRelease = false;
             }
@@ -112,7 +148,7 @@ function showStats(data) {
             var downloadInfoHTML = "";
             if(releaseAssets.length) {
                 downloadInfoHTML += "<h4><span class='glyphicon glyphicon-download'></span>&nbsp;&nbsp;" +
-                    "Download Info</h4>";
+                    i18n.t('downloadInfo') + "</h4>";
 
                 downloadInfoHTML += "<ul>";
 
@@ -120,9 +156,9 @@ function showStats(data) {
                     var assetSize = (asset.size / 1048576.0).toFixed(2);
                     var lastUpdate = asset.updated_at.split("T")[0];
 
-                    downloadInfoHTML += "<li><code>" + asset.name + "</code> (" + assetSize + "&nbsp;MiB) - " +
-                        "downloaded " + formatNumber(asset.download_count) + "&nbsp;times. " +
-                        "Last&nbsp;updated&nbsp;on&nbsp;" + lastUpdate + "</li>";
+                    downloadInfoHTML += "<li><code>" + asset.name + "</code> (" + assetSize + "&nbsp;" + i18n.t('mib') + ") - " +
+                        i18n.t('downloads') + "&nbsp;" + formatNumber(asset.download_count) + "&nbsp;" + i18n.t('times') + ". " +
+                        i18n.t('lastUpdated') + "&nbsp;" + lastUpdate + "</li>";
 
                     totalDownloadCount += asset.download_count;
                     releaseDownloadCount += asset.download_count;
@@ -136,21 +172,21 @@ function showStats(data) {
                 releaseBadge + "</h3>" + "<hr class='release-hr'>";
 
             html += "<h4><span class='glyphicon glyphicon-info-sign'></span>&nbsp;&nbsp;" +
-                "Release Info</h4>";
+                i18n.t('releaseInfo') + "</h4>";
 
             html += "<ul>";
 
             if (releaseAuthor) {
                 html += "<li><span class='glyphicon glyphicon-user'></span>&nbsp;&nbsp;" +
-                    "Author: <a href='" + releaseAuthor.html_url + "'>@" + releaseAuthor.login  +"</a></li>";
+                    i18n.t('author') + ": <a href='" + releaseAuthor.html_url + "'>@" + releaseAuthor.login  +"</a></li>";
             }
 
             html += "<li><span class='glyphicon glyphicon-calendar'></span>&nbsp;&nbsp;" +
-                "Published: " + publishDate + "</li>";
+                i18n.t('published') + ": " + publishDate + "</li>";
 
             if(releaseDownloadCount) {
                 html += "<li><span class='glyphicon glyphicon-download'></span>&nbsp;&nbsp;" +
-                    "Downloads: " + formatNumber(releaseDownloadCount) + "</li>";
+                    i18n.t('downloads') + ": " + formatNumber(releaseDownloadCount) + "</li>";
             }
 
             html += "</ul>";
@@ -162,7 +198,7 @@ function showStats(data) {
 
         if(totalDownloadCount) {
             var totalHTML = "<div class='row total-downloads'>";
-            totalHTML += "<h1><span class='glyphicon glyphicon-download'></span>&nbsp;&nbsp;Total Downloads</h1>";
+            totalHTML += "<h1><span class='glyphicon glyphicon-download'></span>&nbsp;&nbsp;" + i18n.t('totalDownloads') + "</h1>";
             totalHTML += "<span>" + formatNumber(totalDownloadCount) + "</span>";
             totalHTML += "</div>";
 
@@ -199,6 +235,8 @@ function redirect(page, perPage) {
 
 // The main function
 $(function() {
+    updateUIText();
+    
     $("#loader-gif").hide();
 
     validateInput();

@@ -1,5 +1,5 @@
 html * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', '微软雅黑', SimHei, sans-serif;
 }
 
 a, a:hover {
