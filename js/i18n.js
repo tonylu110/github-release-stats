@@ -49,7 +49,11 @@ var i18n = {
             'language': 'Language',
             'chinese': '中文',
             'english': 'English',
-            'titleDescription': 'release stats'
+            'titleDescription': 'release stats',
+            'theme': 'Theme',
+            'lightTheme': 'Light',
+            'darkTheme': 'Dark',
+            'autoTheme': 'Auto'
         };
         
         var zh = {
@@ -85,7 +89,11 @@ var i18n = {
             'language': '语言',
             'chinese': '中文',
             'english': 'English',
-            'titleDescription': '发布统计'
+            'titleDescription': '发布统计',
+            'theme': '主题',
+            'lightTheme': '亮色',
+            'darkTheme': '暗色',
+            'autoTheme': '自动'
         };
         
         this.messages = {

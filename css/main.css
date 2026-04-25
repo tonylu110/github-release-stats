@@ -1,16 +1,48 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --border-color: rgba(127, 140, 141, 0.4);
+    --light-bg: rgba(127, 140, 141, 0.1);
+    --link-color: rgba(66, 139, 202, 1);
+    --navbar-bg: #f8f8f8;
+    --navbar-border: #e7e7e7;
+    --footer-bg: rgba(210, 210, 210, 0.2);
+    --footer-border: rgba(210, 210, 210, 0.4);
+    --code-bg: rgba(127, 140, 141, 0.1);
+}
+
+body.dark-theme {
+    --bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --border-color: rgba(200, 200, 200, 0.2);
+    --light-bg: rgba(255, 255, 255, 0.05);
+    --link-color: rgba(100, 180, 255, 1);
+    --navbar-bg: #2d2d2d;
+    --navbar-border: #444444;
+    --footer-bg: rgba(50, 50, 50, 0.5);
+    --footer-border: rgba(100, 100, 100, 0.4);
+    --code-bg: rgba(255, 255, 255, 0.1);
+}
+
 html * {
     font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', '微软雅黑', SimHei, sans-serif;
 }
 
 a, a:hover {
-    color: rgba(66, 139, 202, 1);
+    color: var(--link-color);
 }
 
 code {
     font-family: 'Roboto Mono', monospace;
-    background-color: rgba(127, 140, 141, 0.1);
+    background-color: var(--code-bg);
     color: inherit;
     white-space: nowrap;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-group {
@@ -19,6 +51,31 @@ code {
 #username, #repository, #get-stats-button {
     margin-top: 10px;
     width: 100%;
+}
+
+.form-control {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.form-control:focus {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--link-color);
+}
+
+.btn:not(.btn-primary) {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn:not(.btn-primary):hover {
+    background-color: var(--link-color);
+    color: #fff;
 }
 
 #stats-result {
@@ -42,11 +99,12 @@ code {
 }
 
 .release {
-    background-color: rgba(127, 140, 141, 0.1);
-    border: solid 1px rgba(127, 140, 141, 0.4);
+    background-color: var(--light-bg);
+    border: solid 1px var(--border-color);
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .release h3 .glyphicon {
@@ -61,7 +119,8 @@ code {
 }
 
 .release-hr {
-    border-top-color: rgba(127, 140, 141, 0.4);
+    border-top-color: var(--border-color);
+    transition: border-color 0.3s ease;
 }
 
 .latest-release {
@@ -69,16 +128,33 @@ code {
     border-color: rgba(92, 184, 92, 0.4);
 }
 
+body.dark-theme .latest-release {
+    background-color: rgba(92, 184, 92, 0.15);
+    border-color: rgba(92, 184, 92, 0.3);
+}
+
 .latest-release h3, .latest-release h3 .glyphicon, .latest-release h3 a {
     color: rgba(92, 184, 92, 1);
+}
+
+body.dark-theme .latest-release h3, body.dark-theme .latest-release h3 .glyphicon, body.dark-theme .latest-release h3 a {
+    color: rgba(120, 200, 120, 1);
 }
 
 .latest-release h3 .badge {
     background-color: rgba(92, 184, 92, 1);
 }
 
+body.dark-theme .latest-release h3 .badge {
+    background-color: rgba(120, 200, 120, 1);
+}
+
 .latest-release .release-hr {
     border-color: rgba(92, 184, 92, 0.4);
+}
+
+body.dark-theme .latest-release .release-hr {
+    border-color: rgba(120, 200, 120, 0.3);
 }
 
 .pre-release {
@@ -86,16 +162,33 @@ code {
     border-color: rgba(240, 173, 78, 0.4);
 }
 
+body.dark-theme .pre-release {
+    background-color: rgba(240, 173, 78, 0.1);
+    border-color: rgba(240, 173, 78, 0.3);
+}
+
 .pre-release h3, .pre-release h3 .glyphicon, .pre-release h3 a {
     color: rgba(240, 173, 78, 1);
+}
+
+body.dark-theme .pre-release h3, body.dark-theme .pre-release h3 .glyphicon, body.dark-theme .pre-release h3 a {
+    color: rgba(255, 190, 100, 1);
 }
 
 .pre-release h3 .badge {
     background-color: rgba(240, 173, 78, 1);
 }
 
+body.dark-theme .pre-release h3 .badge {
+    background-color: rgba(255, 190, 100, 1);
+}
+
 .pre-release .release-hr {
     border-color: rgba(240, 173, 78, 0.4);
+}
+
+body.dark-theme .pre-release .release-hr {
+    border-color: rgba(255, 190, 100, 0.3);
 }
 
 #loader-gif {
@@ -137,10 +230,49 @@ body {
     bottom: 0;
     width: 100%;
     height: 40px;
-    background-color: rgba(210, 210, 210, 0.2);
+    background-color: var(--footer-bg);
     padding: 10px;
     text-align: center;
-    border-top: 1px solid rgba(210, 210, 210, 0.4);
+    border-top: 1px solid var(--footer-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar-default {
+    background-color: var(--navbar-bg);
+    border-color: var(--navbar-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .nav > li > a {
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.navbar-default .nav > li > a:hover {
+    color: var(--link-color);
+    background-color: var(--light-bg);
+}
+
+.navbar-default .dropdown-menu {
+    background-color: var(--navbar-bg);
+    border-color: var(--border-color);
+}
+
+.navbar-default .dropdown-menu > li > a {
+    color: var(--text-color);
+}
+
+.navbar-default .dropdown-menu > li > a:hover {
+    background-color: var(--light-bg);
+    color: var(--link-color);
+}
+
+.alert {
+    background-color: var(--light-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 #ads {
@@ -165,4 +297,28 @@ body {
 #per-page select {
     width: 60px;
     margin-left: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pager > li > a {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pager > li > a:hover {
+    background-color: var(--link-color);
+    color: #fff;
+    border-color: var(--link-color);
+}
+
+.pager > li.disabled > a {
+    background-color: var(--light-bg);
+    color: #999;
+    border-color: var(--border-color);
+    cursor: not-allowed;
 }
